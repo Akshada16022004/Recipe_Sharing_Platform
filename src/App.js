@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import axios from "axios";
+import "./App.css";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import SubmitRecipe from "./pages/SubmitRecipe";
+import Login from "./pages/Login";
+import Recipes from "./pages/Recipes";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        {/* Navbar */}
+        <header className="navbar">
+          <span className="logo">FOOD HUT</span>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/submit-recipe">Add Recipe</Link>
+            <Link to="/Recipes">Recipes</Link>
+            <Link to="/login">Login</Link>
+          </nav>
+        </header>
+
+        {/* Page Routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/submit-recipe" element={<SubmitRecipe />} />
+          
+          <Route path="/Recipes" element={<Recipes />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
