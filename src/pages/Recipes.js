@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "../App.css";
+import { Container, Card } from "react-bootstrap";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
 
+  // Fetch recipes from backend
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch("http://localhost:5001/api/recipes");
+      if (!response.ok) {
+        throw new Error("Failed to fetch recipes");
+      }
+      const data = await response.json();
+      setRecipes(data);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/recipes") // API to fetch recipes
-      .then((res) => setRecipes(res.data))
-      .catch((err) => console.log(err));
+    fetchRecipes();
   }, []);
 
   return (
-    <div className="recipes-container">
-      <h2>Our Recipes</h2>
-      <div className="recipe-list">
-        {recipes.map((recipe) => (
-          <div key={recipe._id} className="recipe-card">
-            <img src={recipe.image} alt={recipe.title} />
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-           
-        ))}
+    <Container className="mt-4">
+      <h2 className="text-center mb-4">Recipes</h2>
+      <div className="d-flex flex-wrap justify-content-center">
+        {recipes.length > 0 ? (
+          recipes.map((recipe) => (
+            <Card key={recipe._id} className="m-2 p-3" style={{ width: "18rem" }}>
+              <Card.Body>
+                <Card.Title>{recipe.title}</Card.Title>
+                <Card.Text>{recipe.description}</Card.Text>
+              </Card.Body>
+            </Card>
+          ))
+        ) : (
+          <p>No recipes available. Add some!</p>
+        )}
       </div>
-    </div>
+    </Container>
   );
 };
 

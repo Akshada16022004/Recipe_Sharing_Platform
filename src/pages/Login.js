@@ -1,39 +1,40 @@
-import React, { useState } from "react";
-import "../App.css";
+import React, {useState} from 'react'
+import axios from 'axios'
+import {Link,useNavigate} from 'react-router-dom'
+import '../App.css'
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login({setIsLoggedIn}){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Logging in with:", { email, password });
-  };
+    const handleLogin = async () => {
+        try {
+          const res = await axios.post("http://localhost:5001/login", { email, password });
+          localStorage.setItem("username", res.data.username);
+          setIsLoggedIn(true);
+          navigate("/home");
+        } catch (error) {
+          alert("Invalid Credentials");
+        }
+    }
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    </div>
-  );
-};
+    <>
+    <div class="login" >
 
-export default Login;
+        <div class="content" style={{backgroundColor:'#F1F1F1', padding:"5rem"}}>
+          
+          <h1>Login</h1><br/>
+          <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} /><br/>
+          <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} /><br/>
+          <button onClick={handleLogin}>Login</button><br/>
+          <p>New user? <Link to="/register">Register</Link></p>
+        </div>
+      </div>
+    
+    
+    
+   </>
+  )
+}

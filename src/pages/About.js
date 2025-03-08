@@ -4,7 +4,7 @@ import "../App.css";
 const About = () => {
   return (
     <div className="page-container">
-      <h2>About FOOD HUT</h2>
+      <h2>ABOUT FOOD HUT</h2>
       <h4>At FOOD HUT, we believe that food is more than just nourishment — it's a way to bring people together, spark creativity, and share experiences. Our mission is to create a community where food lovers from all walks of life can connect, learn, and inspire each other.
 
 

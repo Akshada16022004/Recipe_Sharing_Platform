@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import axios from "axios";
+
 import "./App.css";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import SubmitRecipe from "./pages/SubmitRecipe";
+import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Recipes from "./pages/Recipes";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const App = () => {
+
+function App () {
+  
+  const [recipes, setRecipes] = useState([]);
+
   return (
     <Router>
       <div>
@@ -21,6 +27,7 @@ const App = () => {
             <Link to="/about">About</Link>
             <Link to="/submit-recipe">Add Recipe</Link>
             <Link to="/Recipes">Recipes</Link>
+            <Link to="/Register">Register</Link>
             <Link to="/login">Login</Link>
           </nav>
         </header>
@@ -30,8 +37,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/submit-recipe" element={<SubmitRecipe />} />
-          
-          <Route path="/Recipes" element={<Recipes />} />
+          <Route path="/register" element={<Register />} />
+        
+          <Route path="/recipes" element={<Recipes recipes={recipes} />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
